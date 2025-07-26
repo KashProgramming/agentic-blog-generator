@@ -5,15 +5,12 @@ from langchain_core.tools import tool
 from langchain_groq import ChatGroq
 from langchain_tavily import TavilySearch
 import os
-from dotenv import load_dotenv
 from docx import Document
 from io import BytesIO
 
-load_dotenv()
-
 # TAVILY API & GROQ API setup
-os.environ["TAVILY_API_KEY"]=os.getenv("TAVILY_API_KEY")
-os.environ["GROQ_API_KEY"]=os.getenv("GROQ_API_KEY")
+os.environ["TAVILY_API_KEY"]=st.secrets["TAVILY_API_KEY"]
+groq_api=st.secrets["GROQ_API_KEY"]
 search_tool=TavilySearch(max_results=3)
 
 # State schema
@@ -113,7 +110,7 @@ if st.button("Generate Blog"):
     else:
         from langchain_groq import ChatGroq
         st.session_state.clear()
-        st.session_state["llm"]=ChatGroq(model=groq_model)
+        st.session_state["llm"]=ChatGroq(model=groq_model,api_key=groq_api)
 
         # LangGraph pipeline setup
         workflow=StateGraph(State)
