@@ -102,7 +102,7 @@ def route_after_draft(state: State):
 st.set_page_config(page_title="Blog Generator Squad", layout="centered")
 st.title("Agentic AI Blog Generator")
 
-groq_api=st.secrets["GROQ_API_KEY"]
+groq_api=os.getenv("GROQ_API_KEY")
 groq_model=st.text_input("Enter Groq model (e.g. llama3-8b-8192 or mixtral-8x7b-32768)")
 
 topic=st.text_input("Enter a blog topic:", placeholder="e.g. Agentic AI vs AI Agents")
