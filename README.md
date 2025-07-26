@@ -6,7 +6,7 @@
 
 ## Live Demo
 👉 Try it now: [**Agentic AI Blog Generator App**](https://agentic-ai-blog-generator.streamlit.app/)  
-No setup needed — just plug in your Groq API key and your favourite Groq model to start generating blogs.
+No setup needed — just plug in your favourite Groq model to start generating blogs.
 
 ## Workflow Diagram (LangGraph Flow)
 ![image](https://github.com/user-attachments/assets/7db0f9f9-39a9-4bd7-b7a9-6ce78fb84818)
