@@ -11,8 +11,9 @@ from io import BytesIO
 
 load_dotenv()
 
-# TAVILY API setup (static for now)
+# TAVILY API & GROQ API setup
 os.environ["TAVILY_API_KEY"]=os.getenv("TAVILY_API_KEY")
+os.environ["GROQ_API_KEY"]=os.getenv("GROQ_API_KEY")
 search_tool=TavilySearch(max_results=3)
 
 # State schema
@@ -102,7 +103,6 @@ def route_after_draft(state: State):
 st.set_page_config(page_title="Blog Generator Squad", layout="centered")
 st.title("Agentic AI Blog Generator")
 
-groq_api=os.getenv("GROQ_API_KEY")
 groq_model=st.text_input("Enter Groq model (e.g. llama3-8b-8192 or mixtral-8x7b-32768)")
 
 topic=st.text_input("Enter a blog topic:", placeholder="e.g. Agentic AI vs AI Agents")
@@ -113,7 +113,7 @@ if st.button("Generate Blog"):
     else:
         from langchain_groq import ChatGroq
         st.session_state.clear()
-        st.session_state["llm"]=ChatGroq(model=groq_model, api_key=groq_api)
+        st.session_state["llm"]=ChatGroq(model=groq_model)
 
         # LangGraph pipeline setup
         workflow=StateGraph(State)
