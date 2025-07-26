@@ -102,19 +102,18 @@ def route_after_draft(state: State):
 st.set_page_config(page_title="Blog Generator Squad", layout="centered")
 st.title("Agentic AI Blog Generator")
 
-with st.expander("🔐 Groq Settings"):
-    groq_api=st.text_input("Enter your Groq API key", type="password")
-    groq_model=st.text_input("Enter Groq model (e.g. llama3-8b-8192 or mixtral-8x7b-32768)")
+groq_api=st.secrets["GROQ_API_KEY"]
+groq_model=st.text_input("Enter Groq model (e.g. llama3-8b-8192 or mixtral-8x7b-32768)")
 
 topic=st.text_input("Enter a blog topic:", placeholder="e.g. Agentic AI vs AI Agents")
 
 if st.button("Generate Blog"):
-    if not all([groq_api.strip(), groq_model.strip(), topic.strip()]):
+    if not all([groq_model.strip(), topic.strip()]):
         st.warning("Please fill in all required fields.")
     else:
-        os.environ["GROQ_API_KEY"]=groq_api
         from langchain_groq import ChatGroq
-        st.session_state["llm"]=ChatGroq(model=groq_model)
+        st.session_state.clear()
+        st.session_state["llm"]=ChatGroq(model=groq_model, api_key=groq_api)
 
         # LangGraph pipeline setup
         workflow=StateGraph(State)
